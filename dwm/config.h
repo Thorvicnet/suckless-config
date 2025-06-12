@@ -101,6 +101,31 @@ static const char *voldowncmd[] = {"pactl", "set-sink-volume", "0", "-5%",
                                    NULL};
 static const char *flameshot[] = {"sh", "-c",
                                   "flameshot & disown; flameshot gui", NULL};
+static const char *helpkeys[] = {"sh", "-c", "~/.config/custom/dwm-help.sh",
+                                 NULL};
+static const char *clipmenucmd[] = {
+    "clipmenu", "-i",      "-fn", "FiraCode Nerd Font:size=12",
+    "-nb",      "#333846", "-nf", "#828A9A",
+    "-sb",      "#72CCE8", "-sf", "#E1E3E4",
+    NULL};
+static const char *wifimenucmd[] = {"wifimenu",
+                                    "--launcher",
+                                    "dmenu",
+                                    "-i",
+                                    "-fn",
+                                    "FiraCode Nerd Font:size=12",
+                                    "-nb",
+                                    "#333846",
+                                    "-nf",
+                                    "#828A9A",
+                                    "-sb",
+                                    "#72CCE8",
+                                    "-sf",
+                                    "#E1E3E4",
+                                    "--interface",
+                                    "wlan0",
+                                    "--notifications",
+                                    NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
@@ -139,6 +164,9 @@ static const Key keys[] = {
     TAGKEYS(XK_ccedilla, 8)   // 9
     {MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_s, spawn, {.v = flameshot}},
+    {MODKEY | ShiftMask, XK_h, spawn, {.v = helpkeys}},
+    {MODKEY, XK_v, spawn, {.v = clipmenucmd}},
+    {MODKEY, XK_w, spawn, {.v = wifimenucmd}},
     {0, XF86XK_AudioMute, spawn, {.v = mutecmd}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = voldowncmd}},
     {0, XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd}},
