@@ -103,29 +103,10 @@ static const char *flameshot[] = {"sh", "-c",
                                   "flameshot & disown; flameshot gui", NULL};
 static const char *helpkeys[] = {"sh", "-c", "~/.config/custom/dwm-help.sh",
                                  NULL};
-static const char *clipmenucmd[] = {
-    "clipmenu", "-i",      "-fn", "FiraCode Nerd Font:size=12",
-    "-nb",      "#333846", "-nf", "#828A9A",
-    "-sb",      "#72CCE8", "-sf", "#E1E3E4",
-    NULL};
-static const char *wifimenucmd[] = {"wifimenu",
-                                    "--launcher",
-                                    "dmenu",
-                                    "-i",
-                                    "-fn",
-                                    "FiraCode Nerd Font:size=12",
-                                    "-nb",
-                                    "#333846",
-                                    "-nf",
-                                    "#828A9A",
-                                    "-sb",
-                                    "#72CCE8",
-                                    "-sf",
-                                    "#E1E3E4",
-                                    "--interface",
-                                    "wlan0",
-                                    "--notifications",
-                                    NULL};
+static const char *clipmenucmd[] = {"clipmenu", "-i", NULL};
+
+static const char *wifimenucmd[] = {"wifimenu",  "--dmenu",   "-i",
+                                    "wlp0s20f3", "--submenu", NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
