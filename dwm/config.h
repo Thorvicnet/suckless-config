@@ -104,9 +104,11 @@ static const char *flameshot[] = {"sh", "-c",
 static const char *helpkeys[] = {"sh", "-c", "~/.config/custom/dwm-help.sh",
                                  NULL};
 static const char *clipmenucmd[] = {"clipmenu", "-i", NULL};
-
-static const char *wifimenucmd[] = {"wifimenu",  "--dmenu",   "-i",
-                                    "wlp0s20f3", "--submenu", NULL};
+static const char *wifimenucmd[] = {
+    "sh", "-c", "~/.config/custom/wifimenu.sh --dmenu -i wlp0s20f3 --submenu",
+    NULL};
+static const char *blmenucmd[] = {"sh", "-c", "~/.config/custom/blmenu.sh",
+                                  NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
@@ -148,6 +150,7 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_h, spawn, {.v = helpkeys}},
     {MODKEY, XK_v, spawn, {.v = clipmenucmd}},
     {MODKEY, XK_w, spawn, {.v = wifimenucmd}},
+    {MODKEY, XK_x, spawn, {.v = blmenucmd}},
     {0, XF86XK_AudioMute, spawn, {.v = mutecmd}},
     {0, XF86XK_AudioLowerVolume, spawn, {.v = voldowncmd}},
     {0, XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd}},
