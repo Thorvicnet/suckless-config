@@ -147,8 +147,24 @@ clock() {
 }
 
 main() {
+  if [ "$TAILSCALE_UP" = "true" ]; then
+    tailscale="⠿⠇ "
+  else
+    tailscale=""
+  fi
+  if [ "$WARP_UP" = "true" ]; then
+    warp=" "
+  else
+    warp=""
+  fi
+  if [ "$HTTP_PROXY" = "http://10.0.0.1:3128/" ]; then
+    # proxy="󰒍 "
+    proxy="SCHOOL "
+  else
+    proxy=""
+  fi
   while true; do
-    xsetroot -name " $(usbmon) $(bluetooth) $(ram) | $(cpu) | $(network) | $(volume_pa) | $(battery) | $(clock)"
+    xsetroot -name " $(usbmon) $(bluetooth) $(ram) | $(cpu) | ${tailscale}${warp}${proxy}$(network) | $(volume_pa) | $(battery) | $(clock)"
     sleep 1
   done
 }
