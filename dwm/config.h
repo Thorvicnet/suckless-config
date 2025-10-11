@@ -34,7 +34,7 @@ static const char *colors[][3] = {
 
     /*               fg          bg         border   */
     [SchemeNorm] = {col_fg, col_bg1, col_bg3},
-    [SchemeSel] = {col_fg, col_bg_dim, col_blue},
+    [SchemeSel] = {col_fg, col_bg_dim, col_gray_dim},
 };
 
 static const unsigned int borderpx = 1; /* border pixel of windows */
