@@ -112,6 +112,9 @@ static const char *wifimenucmd[] = {
     NULL};
 static const char *blmenucmd[] = {"sh", "-c", "~/.config/custom/blmenu.sh",
                                   NULL};
+static const char *slockcmd[] = {"slock", NULL};
+static const char *bravecmd[] = {"brave", NULL};
+static const char *vesktopcmd[] = {"vesktop", NULL};
 
 static const Key keys[] = {
     /* modifier                     key        function        argument */
@@ -151,6 +154,9 @@ static const Key keys[] = {
     {MODKEY | ShiftMask, XK_q, quit, {0}},
     {MODKEY, XK_s, spawn, {.v = flameshot}},
     {MODKEY | ShiftMask, XK_h, spawn, {.v = helpkeys}},
+    {MODKEY | ShiftMask, XK_l, spawn, {.v = slockcmd}},
+    {MODKEY | ShiftMask, XK_b, spawn, {.v = bravecmd}},
+    {MODKEY | ShiftMask, XK_v, spawn, {.v = vesktopcmd}},
     {MODKEY, XK_v, spawn, {.v = clipmenucmd}},
     {MODKEY, XK_w, spawn, {.v = wifimenucmd}},
     {MODKEY, XK_x, spawn, {.v = blmenucmd}},
