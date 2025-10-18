@@ -1,0 +1,13 @@
+#!/bin/sh
+
+export XDG_SESSION_TYPE=wayland
+export XDG_CURRENT_DESKTOP=wlroots
+export MOZ_ENABLE_WAYLAND=1
+export QT_QPA_PLATFORM=wayland
+
+exec dbus-run-session dwl -s '
+  dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+  wbg "$HOME/Pictures/background/wave2.png" &
+  dwlb &
+  "$HOME/.config/suckless/status-daemon/status_daemon" &
+'

@@ -142,7 +142,10 @@ static const enum libinput_config_tap_button_map button_map =
 
 /* commands */
 static const char *termcmd[] = {"foot", NULL};
-static const char *menucmd[] = {"wmenu-run", NULL};
+static const char *menucmd[] = {"wmenu-run", "-f",     "FiraCode Nerd Font 12",
+                                "-n",        "828A9A", "-N",
+                                "333846",    "-s",     "E1E3E4",
+                                "-S",        "72CCE8", NULL};
 static const char *bravecmd[] = {"brave", NULL};
 static const char *vesktopcmd[] = {"vesktop", NULL};
 static const char *brupcmd[] = {"brightnessctl", "set", "+10%", NULL};
