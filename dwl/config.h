@@ -210,10 +210,10 @@ static const Key keys[] = {
     TAGKEYS(XKB_KEY_ccedilla, XKB_KEY_9, 8),
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_Q, quit, {0}},
 
-    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_b, spawn, {.v = bravecmd}},
-    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_v, spawn, {.v = vesktopcmd}},
-    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_v, spawn, {.v = clipmenucmd}},
-    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_s, spawn, {.v = screenshotcmd}},
+    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_B, spawn, {.v = bravecmd}},
+    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_V, spawn, {.v = vesktopcmd}},
+    {MODKEY, XKB_KEY_v, spawn, {.v = clipmenucmd}},
+    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_S, spawn, {.v = screenshotcmd}},
 
     {0, XKB_KEY_XF86AudioMute, spawn, {.v = mutecmd}},
     {0, XKB_KEY_XF86AudioLowerVolume, spawn, {.v = voldowncmd}},
