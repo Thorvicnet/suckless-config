@@ -8,6 +8,7 @@ export QT_QPA_PLATFORM=wayland
 exec dbus-run-session dwl -s '
   dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
   wbg "$HOME/Pictures/background/wave2.png" &
+  wl-paste --watch cliphist store &
   dwlb &
   "$HOME/.config/suckless/status-daemon/status_daemon" &
 '

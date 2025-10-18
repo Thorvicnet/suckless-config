@@ -146,6 +146,14 @@ static const char *menucmd[] = {"wmenu-run", "-f",     "FiraCode Nerd Font 12",
                                 "-n",        "828A9A", "-N",
                                 "333846",    "-s",     "E1E3E4",
                                 "-S",        "72CCE8", NULL};
+static const char *clipmenucmd[] = {
+    "sh", "-c",
+    "cliphist list | wmenu -f 'FiraCode Nerd Font 12' "
+    "-n 828A9A -N 333846 -s E1E3E4 -S 424B5B "
+    "| cliphist decode | wl-copy",
+    NULL};
+static const char *screenshotcmd[] = {"sh", "-c",
+                                      "grim -g \"$(slurp)\" - | wl-copy", NULL};
 static const char *bravecmd[] = {"brave", NULL};
 static const char *vesktopcmd[] = {"vesktop", NULL};
 static const char *brupcmd[] = {"brightnessctl", "set", "+10%", NULL};
@@ -204,6 +212,9 @@ static const Key keys[] = {
 
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_b, spawn, {.v = bravecmd}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_v, spawn, {.v = vesktopcmd}},
+    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_v, spawn, {.v = clipmenucmd}},
+    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_s, spawn, {.v = screenshotcmd}},
+
     {0, XKB_KEY_XF86AudioMute, spawn, {.v = mutecmd}},
     {0, XKB_KEY_XF86AudioLowerVolume, spawn, {.v = voldowncmd}},
     {0, XKB_KEY_XF86AudioRaiseVolume, spawn, {.v = volupcmd}},
