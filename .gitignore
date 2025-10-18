@@ -1,2 +1,8 @@
 dwm/.git
 dmenu/.git
+dwl/dwl
+*.o
+*-protocol.c
+*-protocol.h
+.ccls-cache
+c
