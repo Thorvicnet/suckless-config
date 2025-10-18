@@ -1,6 +1,7 @@
 dwm/.git
 dmenu/.git
 dwl/dwl
+wmenu/wmenu
 *.o
 *-protocol.c
 *-protocol.h
