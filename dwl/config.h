@@ -7,9 +7,13 @@ static const int bypass_surface_visibility =
     0; /* 1 means idle inhibitors will disable idle tracking even if it's
           surface isn't visible  */
 static const unsigned int borderpx = 1; /* border pixel of windows */
-static const unsigned int gappx = 10;
+static const int smartgaps =
+    0;               /* 1 means no outer gap when there is only one window */
+static int gaps = 1; /* 1 means gaps between windows are added */
+static const unsigned int gappx = 10; /* gap pixel between windows */
 static float resize_factor = 0.002f;
 static int resize_interval_ms = 16;
+enum Direction { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN };
 static const float rootcolor[] = COLOR(0x2A2F38ff);   /* col_bg0 */
 static const float bordercolor[] = COLOR(0x3D4455ff); /* col_bg3 */
 static const float focuscolor[] = COLOR(0xEACB64ff);  /* col_yellow */
@@ -36,6 +40,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const Layout layouts[] = {
     /* symbol     arrange function */
+    {"|w|", btrtile},
     {"[]=", tile},
     {"><>", NULL}, /* no layout function means floating behavior */
     {"[M]", monocle},
@@ -162,6 +167,7 @@ static const Key keys[] = {
     {MODKEY, XKB_KEY_h, setmfact, {.f = -0.05f}},
     {MODKEY, XKB_KEY_l, setmfact, {.f = +0.05f}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_Return, zoom, {0}},
+    {MODKEY, XKB_KEY_g, togglegaps, {0}},
     {MODKEY, XKB_KEY_Tab, view, {0}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_C, killclient, {0}},
     {MODKEY, XKB_KEY_t, setlayout, {.v = &layouts[0]}},

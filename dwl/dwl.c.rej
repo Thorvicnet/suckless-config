@@ -1,99 +1,80 @@
 --- dwl.c
 +++ dwl.c
-@@ -641,15 +650,36 @@ buttonpress(struct wl_listener *listener, void *data)
- 		/* If you released any buttons, we exit interactive move/resize mode. */
- 		/* TODO should reset to the pointer focus's current setcursor */
- 		if (!locked && cursor_mode != CurNormal && cursor_mode != CurPressed) {
-+			c = grabc;
-+			if (c && c->was_tiled && !strcmp(selmon->ltsymbol, "|w|")) {
-+				if (cursor_mode == CurMove && c->isfloating) {
-+					target = xytoclient(cursor->x, cursor->y);
-+
-+					if (target && !target->isfloating && !target->isfullscreen)
-+						insert_client(selmon, target, c);
-+					else
-+						selmon->root = create_client_node(c);
-+
-+					setfloating(c, 0);
-+					arrange(selmon);
-+
-+				} else if (cursor_mode == CurResize && !c->isfloating) {
-+					resizing_from_mouse = 0;
-+				}
-+			} else {
-+				if (cursor_mode == CurResize && resizing_from_mouse)
-+					resizing_from_mouse = 0;
-+			}
-+			/* Default behaviour */
- 			wlr_cursor_set_xcursor(cursor, cursor_mgr, "default");
- 			cursor_mode = CurNormal;
- 			/* Drop the window off on its new monitor */
- 			selmon = xytomon(cursor->x, cursor->y);
- 			setmon(grabc, selmon, 0);
-+			grabc = NULL;
- 			return;
--		} else {
--			cursor_mode = CurNormal;
- 		}
-+		cursor_mode = CurNormal;
- 		break;
- 	}
- 	/* If the event wasn't handled by the compositor, notify the client with
-@@ -1962,22 +2037,41 @@ moveresize(const Arg *arg)
- 	if (!grabc || client_is_unmanaged(grabc) || grabc->isfullscreen)
- 		return;
+@@ -199,6 +199,7 @@ struct Monitor {
+ 	struct wlr_box w; /* window area, layout-relative */
+ 	struct wl_list layers[4]; /* LayerSurface.link */
+ 	const Layout *lt[2];
++	int gaps;
+ 	unsigned int seltags;
+ 	unsigned int sellt;
+ 	uint32_t tagset[2];
+@@ -950,6 +952,8 @@ createmon(struct wl_listener *listener, void *data)
  
--	/* Float the window and tell motionnotify to grab it */
--	setfloating(grabc, 1);
--	switch (cursor_mode = arg->ui) {
--	case CurMove:
--		grabcx = (int)round(cursor->x) - grabc->geom.x;
--		grabcy = (int)round(cursor->y) - grabc->geom.y;
--		wlr_cursor_set_xcursor(cursor, cursor_mgr, "fleur");
--		break;
--	case CurResize:
--		/* Doesn't work for X11 output - the next absolute motion event
--		 * returns the cursor to where it started */
--		wlr_cursor_warp_closest(cursor, NULL,
--				grabc->geom.x + grabc->geom.width,
--				grabc->geom.y + grabc->geom.height);
--		wlr_cursor_set_xcursor(cursor, cursor_mgr, "se-resize");
--		break;
-+	cursor_mode = arg->ui;
-+	grabc->was_tiled = (!grabc->isfloating && !grabc->isfullscreen);
+ 	wlr_output_state_init(&state);
+ 	/* Initialize monitor state using configured rules */
++	m->gaps = gaps;
 +
-+	if (grabc->was_tiled) {
-+		switch (cursor_mode) {
-+		case CurMove:
-+			setfloating(grabc, 1);
-+			grabcx = (int)round(cursor->x) - grabc->geom.x;
-+			grabcy = (int)round(cursor->y) - grabc->geom.y;
-+			wlr_cursor_set_xcursor(cursor, cursor_mgr, "fleur");
-+			break;
-+		case CurResize:
-+			wlr_cursor_set_xcursor(cursor, cursor_mgr, "se-resize");
-+			resize_last_update_x = cursor->x;
-+			resize_last_update_y = cursor->y;
-+			resizing_from_mouse = 1;
-+			break;
-+		}
-+	} else {
-+		/* Default floating logic */
-+		/* Float the window and tell motionnotify to grab it */
-+		setfloating(grabc, 1);
-+		switch (cursor_mode) {
-+		case CurMove:
-+			grabcx = (int)round(cursor->x) - grabc->geom.x;
-+			grabcy = (int)round(cursor->y) - grabc->geom.y;
-+			wlr_cursor_set_xcursor(cursor, cursor_mgr, "fleur");
-+			break;
-+		case CurResize:
-+			wlr_cursor_warp_closest(cursor, NULL,
-+			grabc->geom.x + grabc->geom.width,
-+			grabc->geom.y + grabc->geom.height);
-+			wlr_cursor_set_xcursor(cursor, cursor_mgr, "se-resize");
-+			break;
-+		}
+ 	m->tagset[0] = m->tagset[1] = 1;
+ 	for (r = monrules; r < END(monrules); r++) {
+ 		if (!r->name || strstr(wlr_output->name, r->name)) {
+@@ -2639,7 +2643,7 @@ tagmon(const Arg *arg)
+ void
+ tile(Monitor *m)
+ {
+-	unsigned int mw, my, ty;
++	unsigned int h, r, e = m->gaps, mw, my, ty;
+ 	int i, n = 0;
+ 	Client *c;
+ 
+@@ -2648,23 +2652,30 @@ tile(Monitor *m)
+ 			n++;
+ 	if (n == 0)
+ 		return;
++	if (smartgaps == n)
++		e = 0;
+ 
+ 	if (n > m->nmaster)
+-		mw = m->nmaster ? (int)roundf(m->w.width * m->mfact) : 0;
++		mw = m->nmaster ? (int)roundf((m->w.width + gappx*e) * m->mfact) : 0;
+ 	else
+ 		mw = m->w.width;
+-	i = my = ty = 0;
++	i = 0;
++	my = ty = gappx*e;
+ 	wl_list_for_each(c, &clients, link) {
+ 		if (!VISIBLEON(c, m) || c->isfloating || c->isfullscreen)
+ 			continue;
+ 		if (i < m->nmaster) {
+-			resize(c, (struct wlr_box){.x = m->w.x, .y = m->w.y + my, .width = mw,
+-				.height = (m->w.height - my) / (MIN(n, m->nmaster) - i)}, 0);
+-			my += c->geom.height;
++			r = MIN(n, m->nmaster) - i;
++			h = (m->w.height - my - gappx*e - gappx*e * (r - 1)) / r;
++			resize(c, (struct wlr_box){.x = m->w.x + gappx*e, .y = m->w.y + my,
++				.width = mw - 2*gappx*e, .height = h}, 0);
++			my += c->geom.height + gappx*e;
+ 		} else {
++			r = n - i;
++			h = (m->w.height - ty - gappx*e - gappx*e * (r - 1)) / r;
+ 			resize(c, (struct wlr_box){.x = m->w.x + mw, .y = m->w.y + ty,
+-				.width = m->w.width - mw, .height = (m->w.height - ty) / (n - i)}, 0);
+-			ty += c->geom.height;
++				.width = m->w.width - mw - gappx*e, .height = h}, 0);
++			ty += c->geom.height + gappx*e;
+ 		}
+ 		i++;
  	}
+@@ -2687,6 +2698,13 @@ togglefullscreen(const Arg *arg)
+ 		setfullscreen(sel, !sel->isfullscreen);
  }
  
++void
++togglegaps(const Arg *arg)
++{
++	selmon->gaps = !selmon->gaps;
++	arrange(selmon);
++}
++
+ void
+ toggletag(const Arg *arg)
+ {
