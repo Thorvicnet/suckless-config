@@ -7,11 +7,12 @@ export MOZ_ENABLE_WAYLAND=1
 export QT_QPA_PLATFORM=wayland
 export OZONE_PLATFORM=wayland
 
+"$HOME/.config/suckless/status-daemon/status_daemon" &
 exec dbus-run-session dwl -s '
   dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
-  xsettingsd &
   wbg "$HOME/Pictures/background/wave2.png" &
+  mako &
+  kdeconnectd &
   wl-paste --watch cliphist store &
   dwlb &
-  "$HOME/.config/suckless/status-daemon/status_daemon" &
 '

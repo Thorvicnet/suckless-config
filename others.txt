@@ -1,0 +1,3 @@
+Installed from the AUR:
+wbg
+mako

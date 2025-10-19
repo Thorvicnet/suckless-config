@@ -165,6 +165,7 @@ static const char *voldowncmd[] = {"pactl", "set-sink-volume", "0", "-5%",
 static const char *playpause[] = {"playerctl", "play-pause", NULL};
 static const char *nexttrk[] = {"playerctl", "next", NULL};
 static const char *prevtrk[] = {"playerctl", "previous", NULL};
+static const char *bartogglecmd[] = {"dwlb", "-toggle-visibility", "all", NULL};
 
 static const Key keys[] = {
     /* Note that Shift changes certain key codes: c -> C, 2 -> at, etc. */
@@ -214,6 +215,7 @@ static const Key keys[] = {
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_V, spawn, {.v = vesktopcmd}},
     {MODKEY, XKB_KEY_v, spawn, {.v = clipmenucmd}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_S, spawn, {.v = screenshotcmd}},
+    {MODKEY, XKB_KEY_b, spawn, {.v = bartogglecmd}},
 
     {0, XKB_KEY_XF86AudioMute, spawn, {.v = mutecmd}},
     {0, XKB_KEY_XF86AudioLowerVolume, spawn, {.v = voldowncmd}},
