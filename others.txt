@@ -1,3 +1,4 @@
 Installed from the AUR:
 wbg
 mako
+foot
