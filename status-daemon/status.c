@@ -59,7 +59,7 @@ char *get_bluetooth() {
     return bt_str;
   }
 
-  FILE *fp = popen("bluetoothctl show", "r");
+  FILE *fp = popen("bluetoothctl show 2>/dev/null", "r");
   if (!fp)
     return "";
 
@@ -80,14 +80,14 @@ char *get_bluetooth() {
   }
 
   // Check connected devices
-  fp = popen("bluetoothctl devices Connected | wc -l", "r");
+  fp = popen("bluetoothctl devices Connected | wc -l 2>/dev/null", "r");
   if (!fp) {
     strcpy(bt_str, "");
     last_update = current_time;
     return bt_str;
   }
 
-  int connected;
+  int connected = 0;
   fscanf(fp, "%d", &connected);
   pclose(fp);
 
