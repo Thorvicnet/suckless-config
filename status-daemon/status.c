@@ -260,49 +260,40 @@ char *get_network() {
 }
 
 // Volume using PulseAudio
-char *get_volume_pa() {
+char *get_volume_pw() {
   static char vol_str[32];
-  FILE *fp;
-  char line[256];
-  int muted = 0;
-  int volume = 0;
-
-  // Check if muted
-  fp = popen("pactl list sinks | awk '/Mute:/ { print $2; exit }'", "r");
-  if (fp) {
-    fgets(line, sizeof(line), fp);
-    if (strstr(line, "yes")) {
-      muted = 1;
-    }
-    pclose(fp);
+  FILE *fp = popen("wpctl get-volume @DEFAULT_AUDIO_SINK@", "r");
+  if (!fp) {
+    strcpy(vol_str, " ?%");
+    return vol_str;
   }
 
+  char buf[128] = {0};
+  if (!fgets(buf, sizeof buf, fp)) {
+    pclose(fp);
+    strcpy(vol_str, " ?%");
+    return vol_str;
+  }
+  pclose(fp);
+
+  int muted = strstr(buf, "MUTED") != NULL;
+  double v = 0.0;
+  if (sscanf(buf, "Volume: %lf", &v) != 1) {
+    strcpy(vol_str, " ?%");
+    return vol_str;
+  }
+
+  int pct = (int)(v * 100.0 + 0.5);
   if (muted) {
     strcpy(vol_str, "󰝟 muted");
     return vol_str;
   }
-
-  // Get volume
-  fp = popen("pactl list sinks | grep 'Volume:' | head -1 | awk '{ print $5 }' "
-             "| cut -f1 -d '%'",
-             "r");
-  if (fp) {
-    if (fscanf(fp, "%d", &volume) == 1) {
-      if (volume >= 65) {
-        snprintf(vol_str, sizeof(vol_str), " %d%%", volume);
-      } else if (volume >= 40) {
-        snprintf(vol_str, sizeof(vol_str), " %d%%", volume);
-      } else {
-        snprintf(vol_str, sizeof(vol_str), " %d%%", volume);
-      }
-    } else {
-      strcpy(vol_str, " ?%");
-    }
-    pclose(fp);
-  } else {
-    strcpy(vol_str, " ?%");
-  }
-
+  if (pct >= 65)
+    snprintf(vol_str, sizeof vol_str, " %d%%", pct);
+  else if (pct >= 40)
+    snprintf(vol_str, sizeof vol_str, " %d%%", pct);
+  else
+    snprintf(vol_str, sizeof vol_str, " %d%%", pct);
   return vol_str;
 }
 
@@ -327,7 +318,7 @@ char *get_status() {
   char *ram = get_ram();
   char *cpu = get_cpu();
   char *network = get_network();
-  char *volume = get_volume_pa();
+  char *volume = get_volume_pw();
   char *battery = get_battery();
   char *clock = get_clock();
 

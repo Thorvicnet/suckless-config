@@ -158,10 +158,15 @@ static const char *bravecmd[] = {"brave", NULL};
 static const char *vesktopcmd[] = {"vesktop", NULL};
 static const char *brupcmd[] = {"brightnessctl", "set", "+10%", NULL};
 static const char *brdowncmd[] = {"brightnessctl", "set", "10%-", NULL};
-static const char *mutecmd[] = {"pactl", "set-sink-mute", "0", "toggle", NULL};
-static const char *volupcmd[] = {"pactl", "set-sink-volume", "0", "+5%", NULL};
-static const char *voldowncmd[] = {"pactl", "set-sink-volume", "0", "-5%",
-                                   NULL};
+static const char *mutecmd[] = {"wpctl", "set-mute", "@DEFAULT_AUDIO_SINK@",
+                                "toggle", NULL};
+static const char *volupcmd[] = {
+    "wpctl", "set-volume", "-l", "1.0", "@DEFAULT_AUDIO_SINK@", "5%+", NULL};
+static const char *voldowncmd[] = {"wpctl", "set-volume",
+                                   "@DEFAULT_AUDIO_SINK@", "5%-", NULL};
+static const char *micmutecmd[] = {"wpctl", "set-mute",
+                                   "@DEFAULT_AUDIO_SOURCE@", "toggle", NULL};
+
 static const char *playpause[] = {"playerctl", "play-pause", NULL};
 static const char *nexttrk[] = {"playerctl", "next", NULL};
 static const char *prevtrk[] = {"playerctl", "previous", NULL};
@@ -214,7 +219,7 @@ static const Key keys[] = {
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_B, spawn, {.v = bravecmd}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_V, spawn, {.v = vesktopcmd}},
     {MODKEY, XKB_KEY_v, spawn, {.v = clipmenucmd}},
-    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_S, spawn, {.v = screenshotcmd}},
+    {MODKEY, XKB_KEY_s, spawn, {.v = screenshotcmd}},
     {MODKEY, XKB_KEY_b, spawn, {.v = bartogglecmd}},
 
     {0, XKB_KEY_XF86AudioMute, spawn, {.v = mutecmd}},
@@ -225,6 +230,7 @@ static const Key keys[] = {
     {0, XKB_KEY_XF86AudioPrev, spawn, {.v = prevtrk}},
     {0, XKB_KEY_XF86MonBrightnessUp, spawn, {.v = brupcmd}},
     {0, XKB_KEY_XF86MonBrightnessDown, spawn, {.v = brdowncmd}},
+    {0, XKB_KEY_XF86AudioMicMute, spawn, {.v = micmutecmd}},
 
     /* Ctrl-Alt-Backspace and Ctrl-Alt-Fx used to be handled by X server */
     {WLR_MODIFIER_CTRL | WLR_MODIFIER_ALT, XKB_KEY_Terminate_Server, quit, {0}},
