@@ -1,0 +1,63 @@
+--- a/dwl.c
++++ b/dwl.c
+@@ -1,24 +1,43 @@
+ void keypress(struct wl_listener *listener, void *data) {
+   int i;
+-  /* This event is raised when a key is pressed or released. */
+   KeyboardGroup *group = wl_container_of(listener, group, key);
+   struct wlr_keyboard_key_event *event = data;
+-
+-  /* Translate libinput keycode -> xkbcommon */
+   uint32_t keycode = event->keycode + 8;
+-  /* Get a list of keysyms based on the keymap for this keyboard */
+   const xkb_keysym_t *syms;
+   int nsyms = xkb_state_key_get_syms(group->wlr_group->keyboard.xkb_state,
+                                      keycode, &syms);
+   int handled = 0;
+   uint32_t mods = wlr_keyboard_get_modifiers(&group->wlr_group->keyboard);
+   wlr_idle_notifier_v1_notify_activity(idle_notifier, seat);
+-
+-  /* On _press_ if there is no active screen locker,
+-   * attempt to process a compositor keybinding. */
+-  if (!locked && event->state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+-    for (i = 0; i < nsyms; i++)
+-      handled = keybinding(mods, syms[i]) || handled;
+-  }
+-
+-  if (handled && group->wlr_group->keyboard.repeat_info.delay > 0) {
++  int pressed  = (event->state == WL_KEYBOARD_KEY_STATE_PRESSED);
++  int released = (event->state == WL_KEYBOARD_KEY_STATE_RELEASED);
++  int is_vol_key = 0;
++  for (i = 0; i < nsyms; i++) {
++    if (syms[i] == XKB_KEY_XF86AudioRaiseVolume ||
++        syms[i] == XKB_KEY_XF86AudioLowerVolume) {
++      is_vol_key = 1;
++      break;
++    }
++  }
++
++  if (!locked && (pressed || (released && is_vol_key))) {
++    for (i = 0; i < nsyms; i++)
++      handled = keybinding(mods, syms[i]) || handled;
++  }
++
++  if (handled && pressed &&
++      group->wlr_group->keyboard.repeat_info.delay > 0) {
+     group->mods = mods;
+     group->keysyms = syms;
+     group->nsyms = nsyms;
+     wl_event_source_timer_update(group->key_repeat_source,
+                                  group->wlr_group->keyboard.repeat_info.delay);
+   } else {
+     group->nsyms = 0;
+     wl_event_source_timer_update(group->key_repeat_source, 0);
+   }
+ 
+   if (handled)
+     return;
+-
+   wlr_seat_set_keyboard(seat, &group->wlr_group->keyboard);
+-  /* Pass unhandled keycodes along to the client. */
+   wlr_seat_keyboard_notify_key(seat, event->time_msec, event->keycode,
+                                event->state);
+ }

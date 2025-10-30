@@ -6,6 +6,7 @@ export XDG_CURRENT_DESKTOP=wlroots
 export MOZ_ENABLE_WAYLAND=1
 export QT_QPA_PLATFORM=wayland
 export OZONE_PLATFORM=wayland
+export QT_STYLE_OVERRIDE=Adwaita-dark
 
 "$HOME/.config/suckless/status-daemon/status_daemon" &
 exec dbus-run-session dwl -s '
@@ -17,5 +18,7 @@ exec dbus-run-session dwl -s '
   kdeconnectd &
   wl-paste --watch cliphist store &
   dwlb &
+  xdg-desktop-portal-gtk &
+  xdg-desktop-portal-wlr &
   xdg-desktop-portal &
 '
