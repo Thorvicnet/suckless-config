@@ -41,9 +41,7 @@ static const Rule rules[] = {
 static const Layout layouts[] = {
     /* symbol     arrange function */
     {"|w|", btrtile},
-    {"[]=", tile},
     {"><>", NULL}, /* no layout function means floating behavior */
-    {"[M]", monocle},
 };
 
 /* monitors */
@@ -188,8 +186,7 @@ static const Key keys[] = {
     {MODKEY, XKB_KEY_Tab, view, {0}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_C, killclient, {0}},
     {MODKEY, XKB_KEY_t, setlayout, {.v = &layouts[0]}},
-    {MODKEY, XKB_KEY_f, setlayout, {.v = &layouts[1]}},
-    {MODKEY, XKB_KEY_m, setlayout, {.v = &layouts[2]}},
+    {MODKEY, XKB_KEY_f, togglefloating, {0}},
     {MODKEY, XKB_KEY_space, setlayout, {0}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_space, togglefloating, {0}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_f, togglefullscreen, {0}},
@@ -215,6 +212,17 @@ static const Key keys[] = {
     TAGKEYS(XKB_KEY_underscore, XKB_KEY_8, 7),
     TAGKEYS(XKB_KEY_ccedilla, XKB_KEY_9, 8),
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_Q, quit, {0}},
+
+    {MODKEY | WLR_MODIFIER_SHIFT,
+     XKB_KEY_Left,
+     tagmon,
+     {.i = WLR_DIRECTION_LEFT}},
+    {MODKEY | WLR_MODIFIER_SHIFT,
+     XKB_KEY_Right,
+     tagmon,
+     {.i = WLR_DIRECTION_RIGHT}},
+    {MODKEY, XKB_KEY_Left, focusmon, {.i = WLR_DIRECTION_LEFT}},
+    {MODKEY, XKB_KEY_Right, focusmon, {.i = WLR_DIRECTION_RIGHT}},
 
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_B, spawn, {.v = bravecmd}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_V, spawn, {.v = vesktopcmd}},

@@ -1873,14 +1873,25 @@ void keypress(struct wl_listener *listener, void *data) {
 
   wlr_idle_notifier_v1_notify_activity(idle_notifier, seat);
 
+  int pressed = (event->state == WL_KEYBOARD_KEY_STATE_PRESSED);
+  int released = (event->state == WL_KEYBOARD_KEY_STATE_RELEASED);
+  int is_vol_key = 0;
+  for (i = 0; i < nsyms; i++) {
+    if (syms[i] == XKB_KEY_XF86AudioRaiseVolume ||
+        syms[i] == XKB_KEY_XF86AudioLowerVolume) {
+      is_vol_key = 1;
+      break;
+    }
+  }
+
   /* On _press_ if there is no active screen locker,
    * attempt to process a compositor keybinding. */
-  if (!locked && event->state == WL_KEYBOARD_KEY_STATE_PRESSED) {
+  if (!locked && (pressed || (released && is_vol_key))) {
     for (i = 0; i < nsyms; i++)
       handled = keybinding(mods, syms[i]) || handled;
   }
 
-  if (handled && group->wlr_group->keyboard.repeat_info.delay > 0) {
+  if (handled && pressed && group->wlr_group->keyboard.repeat_info.delay > 0) {
     group->mods = mods;
     group->keysyms = syms;
     group->nsyms = nsyms;
