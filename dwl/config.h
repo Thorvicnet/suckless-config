@@ -33,7 +33,7 @@ static int log_level = WLR_ERROR;
  * least one example) */
 static const Rule rules[] = {
     /* app_id             title       tags mask     isfloating   monitor */
-    {"brave", NULL, 1 << 1, 0, -1},
+    {"helium", NULL, 1 << 1, 0, -1},
     {"vesktop", NULL, 1 << 8, 0, -1},
 };
 
@@ -152,7 +152,7 @@ static const char *clipmenucmd[] = {
     NULL};
 static const char *screenshotcmd[] = {"sh", "-c",
                                       "grim -g \"$(slurp)\" - | wl-copy", NULL};
-static const char *bravecmd[] = {"brave", NULL};
+static const char *heliumcmd[] = {"helium-browser", NULL};
 static const char *vesktopcmd[] = {"vesktop", NULL};
 static const char *brupcmd[] = {"brightnessctl", "set", "+10%", NULL};
 static const char *brdowncmd[] = {"brightnessctl", "set", "10%-", NULL};
@@ -224,7 +224,7 @@ static const Key keys[] = {
     {MODKEY, XKB_KEY_Left, focusmon, {.i = WLR_DIRECTION_LEFT}},
     {MODKEY, XKB_KEY_Right, focusmon, {.i = WLR_DIRECTION_RIGHT}},
 
-    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_B, spawn, {.v = bravecmd}},
+    {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_B, spawn, {.v = heliumcmd}},
     {MODKEY | WLR_MODIFIER_SHIFT, XKB_KEY_V, spawn, {.v = vesktopcmd}},
     {MODKEY, XKB_KEY_v, spawn, {.v = clipmenucmd}},
     {MODKEY, XKB_KEY_s, spawn, {.v = screenshotcmd}},
