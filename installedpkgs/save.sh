@@ -1,2 +1,2 @@
 #/bin/bash
-paru -Qe >$HOSTNAME"-explicitly-installed.txt"
+paru -Qe | awk -F ' ' '{print $1}' >$HOSTNAME"-explicitly-installed.txt"
