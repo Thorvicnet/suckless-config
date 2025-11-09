@@ -48,10 +48,11 @@ man-db
 mesa-utils
 moreutils
 nasm
-neovim
+neovim-nightly-bin
 networkmanager
 nix
 noto-fonts
+noto-fonts-cjk
 noto-fonts-emoji
 nss-mdns
 nvidia
