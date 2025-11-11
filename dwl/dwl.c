@@ -2234,9 +2234,9 @@ void moveresize(const Arg *arg) {
   if (grabc->was_tiled) {
     switch (cursor_mode) {
     case CurMove:
-      setfloating(grabc, 1);
       grabcx = (int)round(cursor->x) - grabc->geom.x;
       grabcy = (int)round(cursor->y) - grabc->geom.y;
+      setfloating(grabc, 1);
       wlr_cursor_set_xcursor(cursor, cursor_mgr, "fleur");
       break;
     case CurResize:

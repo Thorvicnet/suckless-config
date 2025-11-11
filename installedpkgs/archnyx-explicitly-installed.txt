@@ -16,9 +16,11 @@ dhcpcd
 dosfstools
 efibootmgr
 epson-inkjet-printer-escpr-bin
+f3d-bin
 fd
 foot
 fortune-mod
+freecad-weekly-appimage
 freerdp
 fzf
 geforcenow-electron
@@ -46,9 +48,11 @@ man-db
 mesa-utils
 moreutils
 nasm
-neovim
+neovim-nightly-bin
 networkmanager
 nix
+noto-fonts
+noto-fonts-cjk
 noto-fonts-emoji
 nss-mdns
 nvidia
@@ -96,6 +100,7 @@ xdg-desktop-portal-wlr
 xorg-xwayland
 yazi
 zathura-pdf-mupdf
+zed
 zip
 zoxide
 zsh
