@@ -47,7 +47,7 @@ man-db
 mesa-utils
 moreutils
 nasm
-neovim
+neovim-nightly-bin
 nix
 noto-fonts-emoji
 nss-mdns
