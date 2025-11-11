@@ -49,11 +49,11 @@ moreutils
 nasm
 neovim-nightly-bin
 nix
+noto-fonts-cjk
 noto-fonts-emoji
 nss-mdns
 obsidian
 onlyoffice-bin
-openssh
 pacman-contrib
 parsec-bin
 paru
