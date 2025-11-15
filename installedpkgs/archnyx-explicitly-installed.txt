@@ -1,9 +1,9 @@
 acpilight
 base
 base-devel
-brave-bin
 btop
 bubblewrap
+chromium-widevine
 cifs-utils
 clang
 cliphist
