@@ -142,11 +142,7 @@ static const enum libinput_config_tap_button_map button_map =
 static const char *termcmd[] = {"foot", NULL};
 static const char *menucmd[] = {"fuzzel", NULL};
 static const char *clipmenucmd[] = {
-    "sh", "-c",
-    "cliphist list | wmenu -f 'FiraCode Nerd Font 12' "
-    "-n 828A9A -N 333846 -s E1E3E4 -S 424B5B "
-    "| cliphist decode | wl-copy",
-    NULL};
+    "sh", "-c", "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy", NULL};
 static const char *screenshotcmd[] = {"sh", "-c",
                                       "grim -g \"$(slurp)\" - | wl-copy", NULL};
 static const char *heliumcmd[] = {"helium-browser", NULL};
