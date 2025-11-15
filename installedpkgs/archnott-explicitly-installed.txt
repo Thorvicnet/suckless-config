@@ -1,12 +1,11 @@
 acpilight
-anki-bin
 base
 base-devel
 bluez
 bluez-utils
-brave-bin
 btop
 bubblewrap
+chromium-widevine
 cifs-utils
 clang
 cliphist
@@ -52,7 +51,6 @@ nix
 noto-fonts-cjk
 noto-fonts-emoji
 nss-mdns
-obsidian
 onlyoffice-bin
 pacman-contrib
 parsec-bin
