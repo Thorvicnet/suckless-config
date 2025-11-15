@@ -140,10 +140,7 @@ static const enum libinput_config_tap_button_map button_map =
 
 /* commands */
 static const char *termcmd[] = {"foot", NULL};
-static const char *menucmd[] = {"wmenu-run", "-f",     "FiraCode Nerd Font 12",
-                                "-n",        "828A9A", "-N",
-                                "333846",    "-s",     "E1E3E4",
-                                "-S",        "72CCE8", NULL};
+static const char *menucmd[] = {"fuzzel", NULL};
 static const char *clipmenucmd[] = {
     "sh", "-c",
     "cliphist list | wmenu -f 'FiraCode Nerd Font 12' "
