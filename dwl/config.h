@@ -67,7 +67,7 @@ static const struct xkb_rule_names xkb_rules = {
     /* example:
     .options = "ctrl:nocaps",
     */
-    .options = NULL,
+    .options = "caps:escape",
 };
 
 static const int repeat_rate = 25;
@@ -142,7 +142,9 @@ static const enum libinput_config_tap_button_map button_map =
 static const char *termcmd[] = {"foot", NULL};
 static const char *menucmd[] = {"fuzzel", NULL};
 static const char *clipmenucmd[] = {
-    "sh", "-c", "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy", NULL};
+    "sh", "-c",
+    "cliphist list | fuzzel --dmenu --with-nth 2 | cliphist decode | wl-copy",
+    NULL};
 static const char *screenshotcmd[] = {"sh", "-c",
                                       "grim -g \"$(slurp)\" - | wl-copy", NULL};
 static const char *heliumcmd[] = {"helium-browser", NULL};
