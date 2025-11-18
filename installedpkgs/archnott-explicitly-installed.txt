@@ -3,6 +3,7 @@ base
 base-devel
 bluez
 bluez-utils
+brightnessctl
 btop
 bubblewrap
 chromium-widevine
@@ -64,6 +65,7 @@ pipewire-pulse
 playerctl
 podman
 podman-docker
+powertop
 radare2
 ripgrep
 slurp
@@ -73,6 +75,7 @@ system-config-printer
 tailscale
 thunderbird
 tldr
+tlp
 ttf-firacode-nerd
 unzip
 valgrind
