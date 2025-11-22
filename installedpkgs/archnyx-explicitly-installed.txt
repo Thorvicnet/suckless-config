@@ -1,6 +1,7 @@
 acpilight
 base
 base-devel
+brightnessctl
 btop
 bubblewrap
 chromium-widevine
