@@ -8,10 +8,12 @@ export QT_QPA_PLATFORM=wayland
 export OZONE_PLATFORM=wayland
 export QT_STYLE_OVERRIDE=Adwaita-dark
 
-# export http_proxy="http://10.0.0.1:3128"
-# export https_proxy="http://10.0.0.1:3128"
-# export HTTP_PROXY="http://10.0.0.1:3128"
-# export HTTPS_PROXY="http://10.0.0.1:3128"
+if [[ $(cat /etc/hostname) == "archnott" ]] && iwctl station wlan0 show | rg "(Personnels)|(Professeurs)" &>/dev/null; then
+  export http_proxy="http://10.0.0.1:3128"
+  export https_proxy="http://10.0.0.1:3128"
+  export HTTP_PROXY="http://10.0.0.1:3128"
+  export HTTPS_PROXY="http://10.0.0.1:3128"
+fi
 
 "$HOME/.config/suckless/status-daemon/status_daemon" &
 exec dbus-run-session dwl -s '
