@@ -2294,7 +2294,7 @@ void moveresize(const Arg *arg) {
   } else {
     /* Default floating logic */
     /* Float the window and tell motionnotify to grab it */
-    setfloating(grabc, 1);
+    wlr_scene_node_raise_to_top(&grabc->scene->node);
     switch (cursor_mode) {
     case CurMove:
       grabcx = (int)round(cursor->x) - grabc->geom.x;
