@@ -9,17 +9,16 @@ cifs-utils
 clang
 cliphist
 cloudflare-warp-bin
-cowsay
 cppcheck
 cups
 dhcpcd
+discordo-git
 dosfstools
 efibootmgr
 epson-inkjet-printer-escpr-bin
 f3d-bin
 fd
 foot
-fortune-mod
 freecad-weekly-appimage
 freerdp
 fzf
@@ -57,6 +56,7 @@ noto-fonts-emoji
 nss-mdns
 nvidia
 onlyoffice-bin
+openssh
 os-prober
 pacman-contrib
 parsec-bin
@@ -79,7 +79,6 @@ sudo
 system-config-printer
 tailscale
 thunderbird
-tldr
 ttf-firacode-nerd
 unzip
 valgrind
