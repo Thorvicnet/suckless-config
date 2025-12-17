@@ -1,4 +1,4 @@
-android-tools
+7zip
 base
 base-devel
 bluez
@@ -52,6 +52,7 @@ noto-fonts-cjk
 noto-fonts-emoji
 nss-mdns
 onlyoffice-bin
+openssh
 pacman-contrib
 parsec-bin
 paru
