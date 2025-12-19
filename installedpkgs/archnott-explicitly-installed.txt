@@ -1,6 +1,7 @@
 7zip
 base
 base-devel
+bluetui
 bluez
 bluez-utils
 brightnessctl
@@ -13,7 +14,6 @@ cliphist
 cloudflare-warp-bin
 cppcheck
 cups
-discordo-git
 dosfstools
 efibootmgr
 epson-inkjet-printer-escpr-bin
@@ -45,6 +45,7 @@ mako
 man-db
 mesa-utils
 moreutils
+mpv
 nasm
 neovim-nightly-bin
 nix
@@ -66,6 +67,7 @@ pipewire-pulse
 playerctl
 podman
 podman-docker
+qrtool
 radare2
 ripgrep
 slurp
@@ -75,6 +77,7 @@ system-config-printer
 tailscale
 thunderbird
 tlp
+tmux
 ttf-firacode-nerd
 unzip
 valgrind
