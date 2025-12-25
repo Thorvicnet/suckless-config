@@ -67,6 +67,8 @@ pipewire-pulse
 playerctl
 podman
 podman-docker
+qemu-system-x86
+qemu-ui-gtk
 qrtool
 radare2
 ripgrep
